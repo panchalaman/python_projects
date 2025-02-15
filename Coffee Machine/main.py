@@ -25,8 +25,8 @@ MENU = {
 }
 
 resources = {
-    "water": 300,
-    "milk": 200,
+    "water": 1000,
+    "milk": 2000,
     "coffee": 100,
 }
 
@@ -38,9 +38,24 @@ def check_amount(order_item, amount):
     change = round(amount - required_for_order, 2)
     if amount > required_for_order:
         return f"Change ${change} returned. "
+def check_current_resources(c_res, order_name):
+    for item in c_res:
+        if c_res[item] < MENU[order_name]['ingredients'][item]:
+            return f"Insufficient {item}"
+        else:
+            return ""
 
 #TODO : 1. Ask user their order.
-order = input("What would you like to have: espresso/ latte/ cappuccino?").lower()
+
+order = input("What would you like to have: espresso/ latte/ cappuccino?: ").lower()
+if order == 'report':
+    print(resources)
+if order in MENU:
+    resources.update({"water": resources['water']- MENU[order]['ingredients']['water']})
+    resources.update({"milk": resources['milk'] - MENU[order]['ingredients']['milk']})
+    resources.update({"coffee": resources['coffee']- MENU[order]['ingredients']['coffee']})
+    balance = MENU[order]['cost']
+print(check_current_resources(resources, order))
 
 #TODO : 2. Ask user to insert coins.
 
@@ -58,11 +73,5 @@ print(f"You've inserted ${rounded_total} in total.")
 print(check_amount(order, rounded_total))
 
 #TODO : 5. Deduct resources for the order from the available supplies.
-current_resources = {}
-current_available_water = resources['water']- MENU[order]['ingredients']['water']
-current_available_coffee = resources['coffee']- MENU[order]['ingredients']['coffee']
-current_available_milk = resources['milk']- MENU[order]['ingredients']['milk']
-current_resources.update({"water": current_available_water, "milk": current_available_milk, "coffee": current_available_coffee})
-current_balance = MENU[order]['cost']
-print(current_resources)
-print(f"Water: {current_available_water}ml\nMilk: {current_available_milk}ml\nCoffee: {current_available_coffee}g\nBalance: {current_balance}")
+
+print(check_current_resources(current_resources, order))
