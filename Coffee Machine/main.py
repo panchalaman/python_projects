@@ -30,7 +30,7 @@ resources = {
     "coffee": 100,
 }
 
-#TODO : 4. Check if the amount is sufficient for the order.
+#Check if the amount is sufficient for the order.
 def check_amount(order_item, amount):
     required_for_order = MENU[order_item]['cost']
     if amount < required_for_order:
@@ -46,7 +46,7 @@ def check_current_resources(c_res, order_name):
         else:
             return True
 balance = 0
-#TODO : 1. Ask user their order.
+
 should_continue = True
 while should_continue:
 
@@ -58,7 +58,7 @@ while should_continue:
     if order == 'off':
         print("Machine turning off.....")
         should_continue = False
-    #TODO : 5. Deduct resources for the order from the available supplies.
+
     if order in MENU:
         if not check_current_resources(resources, order):
             should_continue= False
@@ -68,7 +68,7 @@ while should_continue:
         balance = MENU[order]['cost']
         resources['balance'] = balance
 
-    #TODO : 2. Ask user to insert coins.
+
 
         coins = {'quarters': 0.25, 'dimes': 0.10, 'nickles': 0.05, 'pennies': 0.01}
         print("Insert coins>>")
@@ -77,7 +77,7 @@ while should_continue:
         nickles = int(input("Insert nickles: "))
         pennies = int(input("Insert pennies: "))
 
-        #TODO : 3. Calculate the total value of coins inserted.
+        #Calculate the total value of coins inserted.
         total = (quarters * coins['quarters']) + (dimes * coins['dimes']) + (nickles * coins['nickles']) + (pennies * coins['pennies'])
         rounded_total = round(total, 2)
         print(f"You've inserted ${rounded_total} in total.")
